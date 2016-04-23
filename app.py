@@ -42,8 +42,8 @@ def airports():
 
 @app.route('/safe')
 def safe():
-  # lat = flask.request.args.get('lat')
-  # lon = flask.request.args.get('lon')
+  lat = flask.request.args.get('lat')
+  lon = flask.request.args.get('lon')
   # my_pos = (lat, lon)
   my_pos = (43.679332, -79.612203)
   for ap in airports_data:
@@ -55,13 +55,13 @@ def safe():
     ap_lon = ap.get('lon', 0.0)
     ap_lat = float(ap_lat)
     ap_lon = float(ap_lon)
-    print ap_lat, ap_lon
+    # print ap_lat, ap_lon
     ap_pos = (ap_lat, ap_lon)
     # print ap_pos
     ap_dist = haversine(my_pos, ap_pos, miles=True)
     if ap_dist <= 5:
-      print ap
-      return 'Not safe'
+      return flask.jsonify(ap)
+      # return 'Not safe'
   return 'Safe'
 
 
