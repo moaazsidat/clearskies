@@ -14,7 +14,7 @@
 ```
 Returns 'Safe' if there is no airport within a 5 mile radius, if not, returns the first airport that is closer than 5 miles, indicating that it is not safe
 
-Example:
+Example (Near Pearson):
 ```
 http://localhost:5000/safe?lat=43.679332&lon=-79.612203
 ```
@@ -32,7 +32,11 @@ Returns Pearson:
   type: "airport"
 }
 ```
-If safe returns
+Example (Waterloo):
+```
+https://skynet-server.herokuapp.com/safe?lat=43.4643&lon=-80.5204
+```
+Returns safe
 ```
 {
 safe: true
@@ -50,7 +54,7 @@ Given 4 lat long pairs where:
 * lat4, lon4 – Top left
 should return an object, where the key `airportsin` corresponds to the array of airports in the specified lat, lon rectangle
 
-Example:
+Example (Toronto):
 ```
 http://localhost:5000/airportsin?lat1=43.57844659660155&lon1=-79.52642306685448&lat2=43.57844659660155&lon2=-79.24182560294867&lat3=43.897733906604834&lon3=-79.24182560294867&lat4=43.897733906604834&lon4=-79.52642306685448
 ```
