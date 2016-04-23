@@ -1,12 +1,21 @@
 import flask
 import json
 import requests
+import random
 from haversine import haversine
 
 app = flask.Flask(__name__)
 
 with open('airports.json') as aiports_file:
   airports_data = json.load(aiports_file)
+
+for ap in airports_data:
+  if not (ap.get('lat') and ap.get('lon')):
+    airports_data.remove(ap)
+
+with open('drones.json') as drones_file:
+  drones_data = json.load(drones_file)
+
 
 @app.route('/')
 def home():
@@ -30,8 +39,8 @@ def airports():
   paris = (48.8567, 2.3508)
   pearson = (43.6777176, -79.6248197)
   custom = (43.679332, -79.612203)
-  print haversine(lyon, paris, miles=True)
-  print haversine(pearson, custom, miles=True)
+  # print haversine(lyon, paris, miles=True)
+  # print haversine(pearson, custom, miles=True)
 
   # for ap in airports_data:
     # print ap.get('iso')
@@ -48,7 +57,7 @@ def safe():
     ap_lon = ap.get('lon', 0.0)
     ap_lat = float(ap_lat)
     ap_lon = float(ap_lon)
-    
+
     ap_pos = (ap_lat, ap_lon)
     ap_dist = haversine(my_pos, ap_pos, miles=True)
     if ap_dist <= 5:
@@ -56,8 +65,8 @@ def safe():
   return flask.jsonify({'safe': True})
 
 
-# Returns true if airport is within the rectangle defined by the lat/lon bounds
-def airport_in_range(ap, min_lat, max_lat, min_lon, max_lon):
+# Returns true if object is within the rectangle defined by the lat/lon bounds
+def object_in_range(ap, min_lat, max_lat, min_lon, max_lon):
   ap_lat = float(ap.get('lat', 0.0))
   ap_lon = float(ap.get('lon', 0.0))
 
@@ -65,6 +74,16 @@ def airport_in_range(ap, min_lat, max_lat, min_lon, max_lon):
     if (ap_lon >= min_lon and ap_lon <= max_lon):
       return True
   return False
+
+# def generate_drones(min_lat, max_lat, min_lon, max_lon):
+#   test_min_lat = 43.57844659660155
+#   test_max_lat = 43.897733906604834
+#   print random.uniform(test_min_lat, test_max_lat)
+#
+#   test_min_lon = -79.52642306685448
+#   test_max_lon = -79.24182560294867
+#   print random.uniform(test_min_lon, test_max_lon)
+
 
 @app.route('/airportsin')
 def aiportsin():
@@ -99,13 +118,21 @@ def aiportsin():
   # br_t = [43.57844659660155,-79.24182560294867]
   # tr_t = [43.897733906604834,-79.24182560294867]
   # tl_t = [43.897733906604834,-79.52642306685448]
-
+  # generate_drones(min_lat, max_lat, min_lon, max_lon)
   results = []
   for ap in airports_data:
-    if airport_in_range(ap, min_lat, max_lat, min_lon, max_lon):
+    if object_in_range(ap, min_lat, max_lat, min_lon, max_lon):
       results.append(ap)
-  return flask.jsonify(airportsin=results)
-  return 'Bar'
+
+  drs = []
+  for dr in drones_data:
+    if object_in_range(dr, min_lat, max_lat, min_lon, max_lon):
+      drs.append(dr)
+      # print drs
+
+  return flask.jsonify(airportsin=results, dronesin=drs)
+
+
 
 
 if __name__ == '__main__':
