@@ -5,8 +5,6 @@ from haversine import haversine
 
 app = flask.Flask(__name__)
 
-openWeatherMapAPIKey = "7a8668b5c3f71c0608b503bdd446c3c1"
-
 with open('airports.json') as aiports_file:
   airports_data = json.load(aiports_file)
 
@@ -15,14 +13,14 @@ def home():
   return 'Welcome to Skynet'
 
 
-@app.route('/weather')
-def weather():
-  lon = flask.request.args.get('lon')
-  lat = flask.request.args.get('lat')
-  print lon, lat
-  url="http://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&appid={}".format(lat, lon, openWeatherMapAPIKey)
-  response = requests.get(url).json()
-  return flask.jsonify(response)
+# @app.route('/weather')
+# def weather():
+#   lon = flask.request.args.get('lon')
+#   lat = flask.request.args.get('lat')
+#   print lon, lat
+#   url="http://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&appid={}".format(lat, lon, openWeatherMapAPIKey)
+#   response = requests.get(url).json()
+#   return flask.jsonify(response)
 
 @app.route('/airports')
 def airports():
