@@ -40,43 +40,26 @@ def airports():
 
 @app.route('/safe')
 def safe():
-  lat = flask.request.args.get('lat')
-  lon = flask.request.args.get('lon')
-  # my_pos = (lat, lon)
-  my_pos = (43.679332, -79.612203)
+  lat = float(flask.request.args.get('lat'))
+  lon = float(flask.request.args.get('lon'))
+  my_pos = (lat, lon)
   for ap in airports_data:
-    # if ap.get('lat') == None:
-    #   print 'no lat', ap
-    # if ap.get('lon') == None:
-    #   print 'no lon', ap
     ap_lat = ap.get('lat', 0.0)
     ap_lon = ap.get('lon', 0.0)
     ap_lat = float(ap_lat)
     ap_lon = float(ap_lon)
-    # print ap_lat, ap_lon
+    
     ap_pos = (ap_lat, ap_lon)
-    # print ap_pos
     ap_dist = haversine(my_pos, ap_pos, miles=True)
     if ap_dist <= 5:
       return flask.jsonify(ap)
-      # return 'Not safe'
-  return 'Safe'
+  return flask.jsonify({'safe': True})
 
 
-# bl 43.610675, -79.627718
-# br 43.602172, -79.331263
-# tr 43.767801, -79.387859
-# tl 43.752153, -79.668630
-
-def airport_in_range(ap, bl, br, tr, tl, min_lat, max_lat, min_lon, max_lon):
-  #
-  # downsview = (43.74278, -79.46555)
-  #
+# Returns true if airport is within the rectangle defined by the lat/lon bounds
+def airport_in_range(ap, min_lat, max_lat, min_lon, max_lon):
   ap_lat = float(ap.get('lat', 0.0))
   ap_lon = float(ap.get('lon', 0.0))
-  ap_name = ap.get('name')
-  if ap_name == 'Downsview Airport':
-    print 'Yay!'
 
   if (ap_lat >= min_lat and ap_lat <= max_lat):
     if (ap_lon >= min_lon and ap_lon <= max_lon):
@@ -106,41 +89,20 @@ def aiportsin():
   lon4 = float(flask.request.args.get('lon4'))
   tl  = (lat4, lon4)
 
-
-  print bl[0], br[0], tr[0], tl[0]
   min_lat = min(bl[0], br[0], tr[0], tl[0])
   max_lat = max(bl[0], br[0], tr[0], tl[0])
 
   min_lon = min(bl[1], br[1], tr[1], tl[1])
   max_lon = max(bl[1], br[1], tr[1], tl[1])
 
-  print min_lat, max_lat, min_lon, max_lon
-  # print bl, br, tr, tl
-
   # bl_t = [43.57844659660155,-79.52642306685448]
   # br_t = [43.57844659660155,-79.24182560294867]
   # tr_t = [43.897733906604834,-79.24182560294867]
   # tl_t = [43.897733906604834,-79.52642306685448]
 
-  # if not bl == bl_t:
-  #   print 'bl'
-  #   print bl
-  #   print bl_t
-  #
-  # if not br == br_t:
-  #   print 'br'
-  #   print br
-  #   print br_t
-  #
-  # if not tr == tr_t:
-  #   print 'tr'
-  #
-  # if not tl == tl_t:
-  #   print 'tl'
-
   results = []
   for ap in airports_data:
-    if airport_in_range(ap, bl, br, tr, tl, min_lat, max_lat, min_lon, max_lon):
+    if airport_in_range(ap, min_lat, max_lat, min_lon, max_lon):
       results.append(ap)
   return flask.jsonify(airportsin=results)
   return 'Bar'

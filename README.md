@@ -32,6 +32,12 @@ Returns Pearson:
   type: "airport"
 }
 ```
+If safe returns
+```
+{
+safe: true
+}
+```
 
 ### aiportsin
 ```
