@@ -64,8 +64,6 @@ def safe():
       return 'Not safe'
   return 'Safe'
 
-  @app.route 
-
 
 
 
