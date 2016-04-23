@@ -70,58 +70,82 @@ def safe():
 # tr 43.767801, -79.387859
 # tl 43.752153, -79.668630
 
-def airport_in_range(ap):
-  bl = (43.57844659660155,-79.52642306685448)
-  br = (43.57844659660155,-79.24182560294867)
-  tl = (43.897733906604834,-79.52642306685448)
-  tr = (43.897733906604834,-79.24182560294867)
-
-  min_lat = 43.57844659660155
-  max_lat = 43.897733906604834
-
-  min_lon = -79.52642306685448
-  max_lon = -79.24182560294867
-
-  pearson = (43.681583, -79.61146)
-  downsview = (43.74278, -79.46555)
-
+def airport_in_range(ap, bl, br, tr, tl, min_lat, max_lat, min_lon, max_lon):
+  #
+  # downsview = (43.74278, -79.46555)
+  #
   ap_lat = float(ap.get('lat', 0.0))
   ap_lon = float(ap.get('lon', 0.0))
   ap_name = ap.get('name')
-
   if ap_name == 'Downsview Airport':
     print 'Yay!'
 
   if (ap_lat >= min_lat and ap_lat <= max_lat):
-
-    print 'Got here'
     if (ap_lon >= min_lon and ap_lon <= max_lon):
-      print 'Second if'
       return True
   return False
 
 @app.route('/airportsin')
 def aiportsin():
-  # lat1 = flask.request.args.get('lat1')
-  # lon1 = flask.request.args.geet('lon1')
+  # 1: bottom left
+  # 2: bottom right
+  # 3: top right
+  # 4: top left
+
+  lat1 = float(flask.request.args.get('lat1'))
+  lon1 = float(flask.request.args.get('lon1'))
+  bl = (lat1, lon1)
+
+  lat2 = float(flask.request.args.get('lat2'))
+  lon2 = float(flask.request.args.get('lon2'))
+  br = (lat2, lon2)
+
+  lat3 = float(flask.request.args.get('lat3'))
+  lon3 = float(flask.request.args.get('lon3'))
+  tr = (lat3, lon3)
+
+  lat4 = float(flask.request.args.get('lat4'))
+  lon4 = float(flask.request.args.get('lon4'))
+  tl  = (lat4, lon4)
+
+
+  print bl[0], br[0], tr[0], tl[0]
+  min_lat = min(bl[0], br[0], tr[0], tl[0])
+  max_lat = max(bl[0], br[0], tr[0], tl[0])
+
+  min_lon = min(bl[1], br[1], tr[1], tl[1])
+  max_lon = max(bl[1], br[1], tr[1], tl[1])
+
+  print min_lat, max_lat, min_lon, max_lon
+  # print bl, br, tr, tl
+
+  # bl_t = [43.57844659660155,-79.52642306685448]
+  # br_t = [43.57844659660155,-79.24182560294867]
+  # tr_t = [43.897733906604834,-79.24182560294867]
+  # tl_t = [43.897733906604834,-79.52642306685448]
+
+  # if not bl == bl_t:
+  #   print 'bl'
+  #   print bl
+  #   print bl_t
   #
-  # lat2 = flask.request.args.get('lat1')
-  # lon2 = flask.request.args.get('lon1')
+  # if not br == br_t:
+  #   print 'br'
+  #   print br
+  #   print br_t
   #
-  # lat3 = flask.request.args.get('lat1')
-  # lon3 = flask.request.args.get('lon1')
+  # if not tr == tr_t:
+  #   print 'tr'
   #
-  # lat4 = flask.request.args.get('lat1')
-  # lon4 = flask.request.args.get('lon1')
+  # if not tl == tl_t:
+  #   print 'tl'
+
   results = []
   for ap in airports_data:
-    if airport_in_range(ap):
+    if airport_in_range(ap, bl, br, tr, tl, min_lat, max_lat, min_lon, max_lon):
       results.append(ap)
-
-  print results
+  return flask.jsonify(airportsin=results)
   return 'Bar'
-
-
 
 
 if __name__ == '__main__':

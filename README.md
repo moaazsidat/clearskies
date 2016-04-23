@@ -8,7 +8,7 @@
 
 # Documentation
 
-### Safe
+### safe
 ```
 /safe?lat=43.679332&lon=-79.612203
 ```
@@ -30,5 +30,62 @@ Returns Pearson:
   size: "large",
   status: 1,
   type: "airport"
+}
+```
+
+### aiportsin
+```
+/airportsin?lat1=43.57844659660155&lon1=-79.52642306685448&lat2=43.57844659660155&lon2=-79.24182560294867&lat3=43.897733906604834&lon3=-79.24182560294867&lat4=43.897733906604834&lon4=-79.52642306685448
+```
+Given 4 lat long pairs where:
+* lat1, lon1 – Bottom left
+* lat2, lon2 – Bottom right
+* lat3, lon3 – Top right
+* lat4, lon4 – Top left
+should return an object, where the key `airportsin` corresponds to the array of airports in the specified lat, lon rectangle
+
+Example:
+```
+http://localhost:5000/airportsin?lat1=43.57844659660155&lon1=-79.52642306685448&lat2=43.57844659660155&lon2=-79.24182560294867&lat3=43.897733906604834&lon3=-79.24182560294867&lat4=43.897733906604834&lon4=-79.52642306685448
+```
+Returns
+```
+
+{
+  "airportsin": [
+    {
+      "continent": "NA",
+      "iata": "YKZ",
+      "iso": "CA",
+      "lat": "43.86131",
+      "lon": "-79.36774",
+      "name": "Buttonville Municipal Airport",
+      "size": "medium",
+      "status": 1,
+      "type": "airport"
+    },
+    {
+      "continent": "NA",
+      "iata": "YTZ",
+      "iso": "CA",
+      "lat": "43.632023",
+      "lon": "-79.39585",
+      "name": "Billy Bishop Toronto City Centre Airport",
+      "size": "medium",
+      "status": 1,
+      "type": "airport"
+    },
+    {
+      "continent": "NA",
+      "iata": "YZD",
+      "iso": "CA",
+      "lat": "43.74278",
+      "lon": "-79.46555",
+      "name": "Downsview Airport",
+      "size": "medium",
+      "status": 1,
+      "type": "airport"
+    }
+  ]
 }
 ```
