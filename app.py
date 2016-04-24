@@ -78,16 +78,16 @@ def object_in_range(ap, min_lat, max_lat, min_lon, max_lon):
   return False
 
 def flight_in_range(fl, min_lat, max_lat, min_lon, max_lon):
-    fl_lat = fl["coord"][0]
-    fl_lon = fl["coord"][1]
-    
+    fl_lon = fl["coord"][0]
+    fl_lat = fl["coord"][1]
+
     if (fl_lat >= min_lat and fl_lat <= max_lat):
       if (fl_lon >= min_lon and fl_lon <= max_lon):
         return True
     return False
-    
-    
-    
+
+
+
 # def generate_drones(min_lat, max_lat, min_lon, max_lon):
 #   test_min_lat = 43.57844659660155
 #   test_max_lat = 43.897733906604834
@@ -142,12 +142,13 @@ def aiportsin():
     if object_in_range(dr, min_lat, max_lat, min_lon, max_lon):
       drs.append(dr)
       # print drs
-  
+
+  # print min_lat, max_lat, min_lon, max_lon
   fls = []
   for fl in flights_data:
     if flight_in_range(fl, min_lat, max_lat, min_lon, max_lon):
       fls.append(fl)
-      print(fls)
+      # print(fls)
 
   return flask.jsonify(airportsin=results, dronesin=drs, flightsin=fls)
 
