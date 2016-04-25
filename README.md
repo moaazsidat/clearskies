@@ -1,20 +1,32 @@
-# Setup Instruction
+
+# ClearSkies
+
+ClearSkies is an Android app that provides drone operators with an overview of the most important flying conditions that affect safety. This is achieved by aggregating data for weather conditions, no-fly zones, and other drones in the same vicinity. It also incorporates the data for the flight paths and uses that to better inform the drone operator. These conditions are used to notify the drone operator whether their drone is still in a safe zone. As soon as they enter an unsafe zone, so for example, in a 5 mile radius of an airport, which is a no-fly/restricted access zone, the app changes its status from GREEN to RED.
+
+This API allows the Android app to get data about airports, drones and flights in a certain region. The app visualizes and presents this information to the drone operator.
+
+![ClearSkies Android App](http://imgur.com/OLkoPjX)
+[Android App Gtihub Repo](https://github.com/mmmoussa/Skynet-Client)
+
+## Setup Instruction
 
 1. Clone the repo
-2. `$ cd skynet-server`
+2. `$ cd clearskies-server`
 3. `$ . env/bin/activate`
 4. `$ python app.py`
 
 
-# Documentation
+## Documentation 
 
-## safe
+**Note**: *New features have been added since the documentation was last updated*
+
+### safe
 ```
 /safe?lat=43.679332&lon=-79.612203
 ```
 Returns 'Safe' if there is no airport within a 5 mile radius, if not, returns the first airport that is closer than 5 miles, indicating that it is not safe
 
-### Example (Near Pearson):
+#### Example (Near Pearson):
 ```
 http://localhost:5000/safe?lat=43.679332&lon=-79.612203
 ```
@@ -32,7 +44,7 @@ Returns Pearson:
   type: "airport"
 }
 ```
-### Example (Waterloo):
+#### Example (Waterloo):
 ```
 https://skynet-server.herokuapp.com/safe?lat=43.4643&lon=-80.5204
 ```
@@ -43,7 +55,7 @@ safe: true
 }
 ```
 
-## aiportsin
+### aiportsin
 ```
 /airportsin?lat1=43.57844659660155&lon1=-79.52642306685448&lat2=43.57844659660155&lon2=-79.24182560294867&lat3=43.897733906604834&lon3=-79.24182560294867&lat4=43.897733906604834&lon4=-79.52642306685448
 ```
@@ -54,7 +66,7 @@ Given 4 lat long pairs where:
 * lat4, lon4 – Top left
 should return an object, where the key `airportsin` corresponds to the array of airports in the specified lat, lon rectangle
 
-### Example (Toronto):
+#### Example (Toronto):
 ```
 http://localhost:5000/airportsin?lat1=43.57844659660155&lon1=-79.52642306685448&lat2=43.57844659660155&lon2=-79.24182560294867&lat3=43.897733906604834&lon3=-79.24182560294867&lat4=43.897733906604834&lon4=-79.52642306685448
 ```
