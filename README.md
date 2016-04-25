@@ -1,7 +1,7 @@
 
 # ClearSkies
 
-ClearSkies is an Android app that provides drone operators with an overview of the most important flying conditions that affect safety. This is achieved by aggregating data for weather conditions, no-fly zones, and other drones in the same vicinity. It also incorporates the data for the flight paths and uses that to better inform the drone operator. These conditions are used to notify the drone operator whether their drone is still in a safe zone. As soon as they enter an unsafe zone, so for example, in a 5 mile radius of an airport, which is a no-fly/restricted access zone, the app changes its status from GREEN to RED.
+ClearSkies is an Android app that provides drone operators with an overview of the most important flying conditions that affect safety. This is achieved by aggregating data for weather conditions, no-fly zones, flight paths, and other drones in the same vicinity. These conditions are used to notify the drone operator whether their drone is still in a safe zone. As soon as they enter an unsafe zone, so for example, in a 5 mile radius of an airport, which is a no-fly/restricted access zone, the app changes its status from GREEN to RED.
 
 This API allows the Android app to get data about airports, drones and flights in a certain region. The app visualizes and presents this information to the drone operator.
 
