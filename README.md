@@ -5,7 +5,7 @@ ClearSkies is an Android app that provides drone operators with an overview of t
 
 This API allows the Android app to get data about airports, drones and flights in a certain region. The app visualizes and presents this information to the drone operator.
 
-![ClearSkies Android App](http://imgur.com/OLkoPjX)
+![ClearSkies Android App](https://imgur.com/OLkoPjX)
 [Android App Gtihub Repo](https://github.com/mmmoussa/Skynet-Client)
 
 ## Setup Instruction
