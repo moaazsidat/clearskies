@@ -1,6 +1,6 @@
 
 # ClearSkies
-**ClearSkies was developed as part of NASA SpaceApps 2016 Waterloo. It was developed for the *Don't Crash My Drone* challenge.  
+**ClearSkies was developed as part of the NASA SpaceApps 2016 hackathon in Waterloo. It was developed for the *Don't Crash My Drone* challenge.  
 [SpaceApps Project Page](https://2016.spaceappschallenge.org/challenges/aero/dont-crash-my-drone/projects/clearskies)**
 
 ClearSkies is an Android app that provides drone operators with an overview of the most important flying conditions that affect safety. This is achieved by aggregating data for weather conditions, no-fly zones, flight paths, and other drones in the same vicinity. These conditions are used to notify the drone operator whether their drone is still in a safe zone. As soon as they enter an unsafe zone, so for example, in a 5 mile radius of an airport, which is a no-fly/restricted access zone, the app changes its status from GREEN to RED.
